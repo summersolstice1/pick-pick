@@ -380,5 +380,5 @@ data/app-data.json
 - [Chart.js](https://www.chartjs.org/)
 
 ---
-
+项目训练模式参考于：https://github.com/lby-1/trainGun
 如果这个项目对你有帮助，欢迎点一个 `Star`。
