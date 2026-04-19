@@ -1,0 +1,86 @@
+service: summer-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: prod
+  region: ap-northeast-1
+  memorySize: 256
+  timeout: 10
+  environment:
+    NODE_ENV: production
+    DB_HOST: ${env:DB_HOST}
+    DB_PORT: ${env:DB_PORT}
+    DB_NAME: ${env:DB_NAME}
+    DB_USER: ${env:DB_USER}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    JWT_SECRET: ${env:JWT_SECRET}
+  apiGateway:
+    binarySettings:
+      - contentTypes:
+          - image/*
+        matcher: ""
+    minimumCompressionSize: 1024
+  tracing:
+    apiGateway: true
+    lambda: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - http:
+          path: /api/{any+}
+          method: ANY
+          cors: true
+      - http:
+          path: /api
+          method: ANY
+          cors: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
+    provisionedConcurrency: 3
+    reservedConcurrency: 20
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        BinaryMediaTypes:
+          - image/*
+        MinimumCompressionSize: 1024
+
+    DynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: summer-sessions
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: sessionId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: N
+        KeySchema:
+          - AttributeName: sessionId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: userId-index
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Aim Lab</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="background-blur background-blur-one"></div>
+        <div class="background-blur background-blur-two"></div>
+        <div class="background-grid"></div>
+    </div>
+
+    <div class="app-shell">
+        <header class="site-header">
+            <div class="brand-block">
+                <p class="brand-kicker">SUMMER WEB</p>
+                <h1>专业鼠标定位训练平台</h1>
+            </div>
+
+            <nav class="top-nav">
+                <button class="nav-btn active" data-view="home">概览</button>
+                <button class="nav-btn" data-view="training">训练场</button>
+                <button class="nav-btn" data-view="stats">统计面板</button>
+                <button class="nav-btn" data-view="achievements">成就墙</button>
+                <button class="nav-btn" data-view="settings">设置</button>
+            </nav>
+
+            <div class="account-nav">
+                <div id="guestActions" class="guest-actions">
+                    <button class="ghost-btn" data-action="open-auth">登录 / 注册</button>
+                </div>
+                <div id="userMenu" class="user-menu hidden">
+                    <div id="userAvatar" class="user-avatar">S</div>
+                    <div class="user-copy">
+                        <strong id="userDisplayName">Summer</strong>
+                        <span id="userUsername">@summer</span>
+                    </div>
+                    <button id="logoutBtn" class="ghost-btn">退出</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="view-container">
+            <section id="home-view" class="view active">
+                <div class="hero-layout">
+                    <div class="hero-card">
+                        <p class="eyebrow">真正可登录、可保存、可持续迭代的 Web 端</p>
+                        <h2>从静态试玩页，升级成带账号体系的训练应用。</h2>
+                        <p class="hero-copy">
+                            访客可以直接开练，登录后自动同步训练记录、成就和个性化设置。首页现在就是你的训练驾驶舱。
+                        </p>
+                        <div class="hero-actions">
+                            <button class="primary-btn start-mode-btn" data-mode="flicking">立即开练</button>
+                            <button class="ghost-btn" data-action="open-auth">登录后云端保存</button>
+                        </div>
+                    </div>
+
+                    <aside class="account-card">
+                        <div id="accountGuestState">
+                            <p class="eyebrow">Account</p>
+                            <h3 id="accountDisplayName">访客模式</h3>
+                            <p id="accountDescription">先试玩也没问题，注册后可以把本地进度一键同步到账号。</p>
+                            <button class="primary-btn wide-btn" data-action="open-auth">创建账号</button>
+                        </div>
+                        <div id="accountUserState" class="hidden">
+                            <p class="eyebrow">Cloud Save</p>
+                            <h3>已登录</h3>
+                            <p>你的训练数据会自动保存在服务器，并可跨设备继续使用。</p>
+                            <button id="openSettingsBtn" class="ghost-btn wide-btn" type="button">管理资料</button>
+                        </div>
+                    </aside>
+                </div>
+
+                <section class="dashboard-grid">
+                    <article class="metric-card accent-rose">
+                        <span>总训练局数</span>
+                        <strong id="dashboardTotalGames">0</strong>
+                    </article>
+                    <article class="metric-card accent-blue">
+                        <span>最佳得分</span>
+                        <strong id="dashboardBestScore">0</strong>
+                    </article>
+                    <article class="metric-card accent-gold">
+                        <span>平均命中率</span>
+                        <strong id="dashboardAccuracy">0%</strong>
+                    </article>
+                    <article class="metric-card accent-mint">
+                        <span>已解锁成就</span>
+                        <strong id="dashboardAchievements">0</strong>
+                    </article>
+                </section>
+
+                <section class="content-grid">
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Recent Runs</p>
+                                <h3>最近训练</h3>
+                            </div>
+                        </div>
+                        <div id="recentSessions" class="session-list"></div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Mode Matrix</p>
+                                <h3>模式表现</h3>
+                            </div>
+                        </div>
+                        <div id="modeBreakdown" class="mode-breakdown"></div>
+                    </article>
+                </section>
+
+                <section class="mode-showcase">
+                    <article class="mode-card">
+                        <p>01</p>
+                        <h3>点击模式</h3>
+                        <span>最适合热身与基础准度训练</span>
+                        <button class="text-btn start-mode-btn" data-mode="flicking">开始</button>
+                    </article>
+                    <article class="mode-card">
+                        <p>02</p>
+                        <h3>追踪模式</h3>
+                        <span>适合稳定性与压枪跟枪训练</span>
+                        <button class="text-btn start-mode-btn" data-mode="tracking">开始</button>
+                    </article>
+                    <article class="mode-card">
+                        <p>03</p>
+                        <h3>切换模式</h3>
+                        <span>适合目标切换和视线管理</span>
+                        <button class="text-btn start-mode-btn" data-mode="switching">开始</button>
+                    </article>
+                    <article class="mode-card">
+                        <p>04</p>
+                        <h3>闪现模式</h3>
+                        <span>适合极限反应训练</span>
+                        <button class="text-btn start-mode-btn" data-mode="reflex">开始</button>
+                    </article>
+                    <article class="mode-card">
+                        <p>05</p>
+                        <h3>六目标模式</h3>
+                        <span>适合顺序点击与爆发连击</span>
+                        <button class="text-btn start-mode-btn" data-mode="sixtarget">开始</button>
+                    </article>
+                </section>
+            </section>
+
+            <section id="training-view" class="view">
+                <div class="training-header">
+                    <div>
+                        <p class="eyebrow">Training Room</p>
+                        <h2>训练场</h2>
+                    </div>
+                    <div class="guest-hint">
+                        登录后训练记录会自动同步；不登录也可以先作为访客试玩。
+                    </div>
+                </div>
+
+                <div class="mode-options">
+                    <button class="mode-btn active" data-mode="flicking">点击模式</button>
+                    <button class="mode-btn" data-mode="tracking">追踪模式</button>
+                    <button class="mode-btn" data-mode="switching">切换模式</button>
+                    <button class="mode-btn" data-mode="reflex">闪现模式</button>
+                    <button class="mode-btn" data-mode="sixtarget">六目标模式</button>
+                </div>
+
+                <div class="game-area">
+                    <canvas id="gameCanvas"></canvas>
+
+                    <div class="hud">
+                        <div class="hud-left">
+                            <div class="hud-pill">Score <span id="score">0</span></div>
+                            <div class="hud-pill">Combo <span id="combo">0</span></div>
+                        </div>
+                        <div class="hud-center">
+                            <div class="timer">
+                                <svg width="84" height="84" viewBox="0 0 80 80">
+                                    <circle cx="40" cy="40" r="35" fill="none" stroke="#d7dce5" stroke-width="4"></circle>
+                                    <circle id="timerProgress" cx="40" cy="40" r="35" fill="none" stroke="#ff4d6d" stroke-width="4" stroke-linecap="round" transform="rotate(-90 40 40)"></circle>
+                                </svg>
+                                <div class="timer-text" id="timerText">30s</div>
+                            </div>
+                        </div>
+                        <div class="hud-right">
+                            <div class="hud-pill">Accuracy <span id="accuracy">100%</span></div>
+                            <div class="hud-pill">Hits <span id="hits">0</span></div>
+                        </div>
+                    </div>
+
+                    <div id="gameMenu" class="game-menu">
+                        <div class="menu-content">
+                            <p class="eyebrow">Session Setup</p>
+                            <h3>开始一局训练</h3>
+                            <div class="game-settings">
+                                <div class="setting">
+                                    <label for="difficulty">难度</label>
+                                    <select id="difficulty">
+                                        <option value="easy">简单</option>
+                                        <option value="normal" selected>普通</option>
+                                        <option value="hard">困难</option>
+                                        <option value="insane">疯狂</option>
+                                    </select>
+                                </div>
+                                <div class="setting">
+                                    <label for="targetSize">目标大小</label>
+                                    <select id="targetSize">
+                                        <option value="tiny">极小</option>
+                                        <option value="small">小</option>
+                                        <option value="medium" selected>中等</option>
+                                        <option value="large">大</option>
+                                        <option value="huge">极大</option>
+                                    </select>
+                                </div>
+                                <div class="setting">
+                                    <label for="gameDuration">时长</label>
+                                    <input type="number" id="gameDuration" min="10" max="300" value="30">
+                                </div>
+                            </div>
+                            <button id="startGameBtn" class="primary-btn wide-btn">开始训练</button>
+                        </div>
+                    </div>
+
+                    <div id="gameResult" class="game-result hidden">
+                        <div class="result-content">
+                            <p class="eyebrow">Session Complete</p>
+                            <h3>本局训练完成</h3>
+                            <div class="result-stats">
+                                <div class="stat">
+                                    <span class="stat-label">得分</span>
+                                    <span class="stat-value" id="finalScore">0</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">命中</span>
+                                    <span class="stat-value" id="finalHits">0</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">准确率</span>
+                                    <span class="stat-value" id="finalAccuracy">0%</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">平均反应</span>
+                                    <span class="stat-value" id="finalAvgTime">0ms</span>
+                                </div>
+                            </div>
+                            <div class="result-actions">
+                                <button id="playAgainBtn" class="primary-btn">再玩一次</button>
+                                <button id="backToMenuBtn" class="ghost-btn">返回概览</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stats-view" class="view">
+                <div class="section-heading">
+                    <p class="eyebrow">Insights</p>
+                    <h2>统计面板</h2>
+                </div>
+
+                <div class="dashboard-grid">
+                    <article class="metric-card accent-rose">
+                        <span>总训练局数</span>
+                        <strong id="totalGames">0</strong>
+                    </article>
+                    <article class="metric-card accent-blue">
+                        <span>总命中数</span>
+                        <strong id="totalHits">0</strong>
+                    </article>
+                    <article class="metric-card accent-gold">
+                        <span>平均命中率</span>
+                        <strong id="avgAccuracy">0%</strong>
+                    </article>
+                    <article class="metric-card accent-mint">
+                        <span>最佳反应</span>
+                        <strong id="bestReaction">暂无</strong>
+                    </article>
+                </div>
+
+                <div class="content-grid">
+                    <article class="panel chart-panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Accuracy Trend</p>
+                                <h3>命中率趋势</h3>
+                            </div>
+                        </div>
+                        <canvas id="accuracyChart"></canvas>
+                    </article>
+
+                    <article class="panel chart-panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Reaction Trend</p>
+                                <h3>反应时间趋势</h3>
+                            </div>
+                        </div>
+                        <canvas id="reactionChart"></canvas>
+                    </article>
+                </div>
+            </section>
+
+            <section id="achievements-view" class="view">
+                <div class="section-heading">
+                    <p class="eyebrow">Milestones</p>
+                    <h2>成就墙</h2>
+                </div>
+                <div id="achievementsList" class="achievements-list"></div>
+            </section>
+
+            <section id="settings-view" class="view">
+                <div class="section-heading">
+                    <p class="eyebrow">Preferences</p>
+                    <h2>设置与账号</h2>
+                </div>
+
+                <div class="settings-grid">
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Gameplay</p>
+                                <h3>训练设置</h3>
+                            </div>
+                        </div>
+                        <div class="setting-stack">
+                            <div class="setting">
+                                <label for="hudEnabled">显示 HUD</label>
+                                <input type="checkbox" id="hudEnabled" checked>
+                            </div>
+                            <div class="setting">
+                                <label for="mouseTrailEnabled">鼠标轨迹</label>
+                                <select id="mouseTrailEnabled">
+                                    <option value="global">全局开启</option>
+                                    <option value="game">仅游戏中</option>
+                                    <option value="off">关闭</option>
+                                </select>
+                            </div>
+                            <div class="setting">
+                                <label for="particlesEnabled">粒子效果</label>
+                                <input type="checkbox" id="particlesEnabled" checked>
+                            </div>
+                            <div class="setting">
+                                <label for="soundEnabled">音效</label>
+                                <select id="soundEnabled">
+                                    <option value="global">全局开启</option>
+                                    <option value="game">仅游戏中</option>
+                                    <option value="off">关闭</option>
+                                </select>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Cursor</p>
+                                <h3>光标设置</h3>
+                            </div>
+                        </div>
+                        <div class="setting-stack">
+                            <div class="setting">
+                                <label for="cursorType">光标类型</label>
+                                <select id="cursorType">
+                                    <option value="default">默认</option>
+                                    <option value="crosshair">准星</option>
+                                    <option value="dot">圆点</option>
+                                    <option value="circle">圆圈</option>
+                                </select>
+                            </div>
+                            <div class="setting">
+                                <label for="cursorSize">光标大小</label>
+                                <div class="range-group">
+                                    <input type="range" id="cursorSize" min="10" max="50" value="20">
+                                    <span id="cursorSizeValue">20px</span>
+                                </div>
+                            </div>
+                            <div class="setting">
+                                <label for="cursorColor">光标颜色</label>
+                                <input type="color" id="cursorColor" value="#ff4d6d">
+                            </div>
+                            <div class="setting">
+                                <label for="cursorEnabled">显示范围</label>
+                                <select id="cursorEnabled">
+                                    <option value="global">全局开启</option>
+                                    <option value="game">仅游戏中</option>
+                                    <option value="off">关闭</option>
+                                </select>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Sensitivity</p>
+                                <h3>灵敏度换算</h3>
+                            </div>
+                        </div>
+                        <div class="setting-stack">
+                            <div class="setting">
+                                <label for="gameSelect">游戏</label>
+                                <select id="gameSelect">
+                                    <option value="cs2">CS2 / CS:GO</option>
+                                    <option value="valorant">Valorant</option>
+                                    <option value="apex">Apex Legends</option>
+                                    <option value="overwatch">Overwatch 2</option>
+                                    <option value="fortnite">Fortnite</option>
+                                    <option value="r6siege">Rainbow Six Siege</option>
+                                </select>
+                            </div>
+                            <div class="setting">
+                                <label for="sensitivity">游戏灵敏度</label>
+                                <div class="range-group">
+                                    <input type="range" id="sensitivity" min="0.1" max="10" step="0.01" value="2">
+                                    <input type="number" id="sensitivityInput" min="0.1" max="10" step="0.01" value="2">
+                                </div>
+                            </div>
+                            <div class="setting">
+                                <label for="dpi">DPI</label>
+                                <input type="number" id="dpi" min="100" max="16000" value="800">
+                            </div>
+                            <div class="setting">
+                                <label>cm/360</label>
+                                <span id="cm360Value">26.00</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="eyebrow">Profile</p>
+                                <h3>账号资料</h3>
+                            </div>
+                        </div>
+                        <form id="profileForm" class="form-block">
+                            <label for="displayNameInput">显示名称</label>
+                            <input id="displayNameInput" type="text" maxlength="24" placeholder="输入显示名称">
+                            <button class="primary-btn" type="submit">更新资料</button>
+                        </form>
+                        <form id="passwordForm" class="form-block">
+                            <label for="oldPasswordInput">旧密码</label>
+                            <input id="oldPasswordInput" type="password" placeholder="当前密码">
+                            <label for="newPasswordInput">新密码</label>
+                            <input id="newPasswordInput" type="password" placeholder="至少 6 位">
+                            <button class="ghost-btn" type="submit">修改密码</button>
+                        </form>
+                    </article>
+                </div>
+
+                <div class="settings-actions">
+                    <button id="saveSettingsBtn" class="primary-btn">保存设置</button>
+                    <button id="exportDataBtn" class="ghost-btn">导出数据</button>
+                    <button id="importDataBtn" class="ghost-btn">导入数据</button>
+                    <button id="resetDataBtn" class="ghost-btn danger-btn">重置本地数据</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">Account Center</p>
+                    <h3>登录或创建账号</h3>
+                </div>
+                <button id="closeAuthModal" class="icon-btn" type="button">×</button>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" type="button">登录</button>
+                <button class="auth-tab" data-tab="register" type="button">注册</button>
+            </div>
+
+            <div id="loginPanel" class="auth-panel active">
+                <form id="loginForm" class="form-block">
+                    <label for="loginUsername">用户名</label>
+                    <input id="loginUsername" name="username" type="text" placeholder="请输入用户名" required>
+                    <label for="loginPassword">密码</label>
+                    <input id="loginPassword" name="password" type="password" placeholder="请输入密码" required>
+                    <button class="primary-btn wide-btn" type="submit">登录并同步</button>
+                </form>
+            </div>
+
+            <div id="registerPanel" class="auth-panel">
+                <form id="registerForm" class="form-block">
+                    <label for="registerDisplayName">显示名称</label>
+                    <input id="registerDisplayName" name="displayName" type="text" placeholder="展示给自己的名字">
+                    <label for="registerUsername">用户名</label>
+                    <input id="registerUsername" name="username" type="text" placeholder="2-20 位字符" required>
+                    <label for="registerPassword">密码</label>
+                    <input id="registerPassword" name="password" type="password" placeholder="至少 6 位" required>
+                    <button class="primary-btn wide-btn" type="submit">创建账号</button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button id="continueGuestBtn" class="ghost-btn wide-btn" type="button">继续访客试玩</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/storage.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/sensitivity.js"></script>
+    <script src="/js/audio.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/engine.js"></script>
+    <script src="/js/modes/flicking.js"></script>
+    <script src="/js/modes/tracking.js"></script>
+    <script src="/js/modes/reflex.js"></script>
+    <script src="/js/modes/switching.js"></script>
+    <script src="/js/modes/sixtarget.js"></script>
+    <script src="/js/stats.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
