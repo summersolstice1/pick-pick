@@ -47,10 +47,10 @@
             <section id="home-view" class="view active">
                 <div class="hero-layout">
                     <div class="hero-card">
-                        <p class="eyebrow">真正可登录、可保存、可持续迭代的 Web 端</p>
-                        <h2>从静态试玩页，升级成带账号体系的训练应用。</h2>
+                        <p class="eyebrow">可登录，可保存，可持续训练</p>
+                        <h2>更完整的鼠标训练平台。</h2>
                         <p class="hero-copy">
-                            访客可以直接开练，登录后自动同步训练记录、成就和个性化设置。首页现在就是你的训练驾驶舱。
+                            支持访客试玩，也支持登录后同步训练记录、成就和个性化设置。
                         </p>
                         <div class="hero-actions">
                             <button class="primary-btn start-mode-btn" data-mode="flicking">立即开练</button>
@@ -146,6 +146,12 @@
                         <span>适合顺序点击与爆发连击</span>
                         <button class="text-btn start-mode-btn" data-mode="sixtarget">开始</button>
                     </article>
+                    <article class="mode-card">
+                        <p>06</p>
+                        <h3>DPI 测试</h3>
+                        <span>参考速度-准确率实验，帮助判断当前 DPI 更偏快还是偏稳</span>
+                        <button class="text-btn start-mode-btn" data-mode="dpi">开始</button>
+                    </article>
                 </section>
             </section>
 
@@ -166,6 +172,7 @@
                     <button class="mode-btn" data-mode="switching">切换模式</button>
                     <button class="mode-btn" data-mode="reflex">闪现模式</button>
                     <button class="mode-btn" data-mode="sixtarget">六目标模式</button>
+                    <button class="mode-btn" data-mode="dpi">DPI 测试</button>
                 </div>
 
                 <div class="game-area">
@@ -245,6 +252,10 @@
                                     <span class="stat-label">平均反应</span>
                                     <span class="stat-value" id="finalAvgTime">0ms</span>
                                 </div>
+                            </div>
+                            <div id="resultInsight" class="result-insight hidden">
+                                <h4 id="resultInsightTitle">测试分析</h4>
+                                <p id="resultInsightBody"></p>
                             </div>
                             <div class="result-actions">
                                 <button id="playAgainBtn" class="primary-btn">再玩一次</button>
@@ -516,6 +527,7 @@
     <script src="/js/modes/reflex.js"></script>
     <script src="/js/modes/switching.js"></script>
     <script src="/js/modes/sixtarget.js"></script>
+    <script src="/js/modes/dpi.js"></script>
     <script src="/js/stats.js"></script>
     <script src="/js/app.js"></script>
 </body>

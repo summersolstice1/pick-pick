@@ -256,7 +256,8 @@ class StatsManager {
             tracking: '追踪模式',
             switching: '切换模式',
             reflex: '闪现模式',
-            sixtarget: '六目标模式'
+            sixtarget: '六目标模式',
+            dpi: 'DPI 测试'
         };
 
         return labels[mode] || mode;

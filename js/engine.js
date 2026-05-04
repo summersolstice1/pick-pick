@@ -33,6 +33,7 @@ class GameEngine {
         this.mouseTrail = [];
         this.particles = [];
         this.modeManager = null;
+        this.lastResultSummary = null;
 
         this.init();
     }
@@ -162,7 +163,8 @@ class GameEngine {
             tracking: new TrackingMode(this),
             switching: new SwitchingMode(this),
             reflex: new ReflexMode(this),
-            sixtarget: new SixTargetMode(this)
+            sixtarget: new SixTargetMode(this),
+            dpi: new DpiTestMode(this)
         };
     }
 
@@ -183,6 +185,7 @@ class GameEngine {
         this.targets = [];
         this.particles = [];
         this.mouseTrail = [];
+        this.lastResultSummary = null;
 
         this.gameState = 'playing';
         this.startTime = Date.now();
@@ -200,15 +203,42 @@ class GameEngine {
         this.gameState = 'gameOver';
         this.gameOverTime = Date.now();
         this.audio.playGameEnd();
-        this.saveGameData();
-        this.showResult();
+        this.lastResultSummary = this.buildResultSummary();
+        this.saveGameData(this.lastResultSummary);
+        this.showResult(this.lastResultSummary);
     }
 
-    async saveGameData() {
-        const avgReactionTime =
+    buildResultSummary() {
+        const activeMode = this.modeManager[this.gameMode];
+        const fallbackAverage =
             this.reactionTimes.length > 0
                 ? Math.round(this.reactionTimes.reduce((sum, value) => sum + value, 0) / this.reactionTimes.length)
                 : 0;
+        const avgReactionTime =
+            activeMode && typeof activeMode.getAverageReactionTime === 'function'
+                ? activeMode.getAverageReactionTime()
+                : fallbackAverage;
+        const insight =
+            activeMode && typeof activeMode.getResultSummary === 'function'
+                ? activeMode.getResultSummary({
+                      accuracy: this.accuracy,
+                      score: this.score,
+                      hits: this.hits,
+                      shots: this.shots,
+                      maxCombo: this.maxCombo,
+                      avgReactionTime,
+                      duration: this.gameDuration
+                  })
+                : null;
+
+        return {
+            avgReactionTime,
+            insight
+        };
+    }
+
+    async saveGameData(resultSummary = this.lastResultSummary) {
+        const avgReactionTime = resultSummary?.avgReactionTime || 0;
 
         const session = {
             mode: this.gameMode,
@@ -219,7 +249,9 @@ class GameEngine {
             maxCombo: this.maxCombo,
             avgReactionTime,
             duration: this.gameDuration,
-            date: new Date().toISOString()
+            date: new Date().toISOString(),
+            insightTitle: resultSummary?.insight?.title || '',
+            insightBody: resultSummary?.insight?.body || ''
         };
 
         if (window.statsManager) {
@@ -264,16 +296,28 @@ class GameEngine {
         }
     }
 
-    showResult() {
-        const avgReactionTime =
-            this.reactionTimes.length > 0
-                ? Math.round(this.reactionTimes.reduce((sum, value) => sum + value, 0) / this.reactionTimes.length)
-                : 0;
-
+    showResult(resultSummary = this.lastResultSummary) {
+        const avgReactionTime = resultSummary?.avgReactionTime || 0;
+        const insight = resultSummary?.insight || null;
         document.getElementById('finalScore').textContent = this.score;
         document.getElementById('finalHits').textContent = this.hits;
         document.getElementById('finalAccuracy').textContent = `${this.accuracy}%`;
         document.getElementById('finalAvgTime').textContent = `${avgReactionTime}ms`;
+
+        const insightElement = document.getElementById('resultInsight');
+        const insightTitleElement = document.getElementById('resultInsightTitle');
+        const insightBodyElement = document.getElementById('resultInsightBody');
+
+        if (insight && insight.body) {
+            insightTitleElement.textContent = insight.title || '测试分析';
+            insightBodyElement.textContent = insight.body;
+            insightElement.classList.remove('hidden');
+        } else {
+            insightTitleElement.textContent = '测试分析';
+            insightBodyElement.textContent = '';
+            insightElement.classList.add('hidden');
+        }
+
         document.getElementById('gameResult').classList.remove('hidden');
     }
 
@@ -388,20 +432,20 @@ class GameEngine {
 
     getTargetSpeed() {
         const speeds = {
-            easy: 1,
-            normal: 2,
-            hard: 3,
-            insane: 4
+            easy: 0.75,
+            normal: 1.35,
+            hard: 2.1,
+            insane: 2.8
         };
         return speeds[this.difficulty] || 2;
     }
 
     getTargetSpawnRate() {
         const rates = {
-            easy: 1500,
-            normal: 1000,
-            hard: 700,
-            insane: 500
+            easy: 1900,
+            normal: 1350,
+            hard: 950,
+            insane: 700
         };
         return rates[this.difficulty] || 1000;
     }

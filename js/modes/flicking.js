@@ -19,7 +19,7 @@ class FlickingMode {
         
         // 移除过期目标
         this.engine.targets = this.engine.targets.filter(target => 
-            now - target.spawnTime < 2000
+            now - target.spawnTime < 3200
         );
         
         // 确保场上至少有一个目标
@@ -69,7 +69,7 @@ class FlickingMode {
             // 绘制脉冲效果
             const age = Date.now() - target.spawnTime;
             const pulse = Math.sin(age / 100) * 3;
-            ctx.strokeStyle = `rgba(0, 255, 204, ${1 - age / 2000})`;
+            ctx.strokeStyle = `rgba(0, 255, 204, ${1 - age / 3200})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.arc(target.x, target.y, target.radius + 8 + pulse, 0, Math.PI * 2);

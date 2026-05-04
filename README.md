@@ -1,84 +1,50 @@
 # Summer Web App
 
-> 一个真正可登录、可保存、可继续扩展的 Web 端鼠标定位训练项目。
-
-[![Node.js](https://img.shields.io/badge/Node.js-Express-111827?style=flat-square&logo=node.js)](https://nodejs.org/)
-[![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-F59E0B?style=flat-square)](#技术栈)
-[![Storage](https://img.shields.io/badge/Storage-Local%20JSON-0EA5E9?style=flat-square)](#数据存储说明)
-[![Status](https://img.shields.io/badge/Status-Playable-10B981?style=flat-square)](#核心能力)
+一个面向鼠标定位训练的 Web 应用，支持账号登录、训练记录保存、成就统计和多模式训练。
 
 ## 项目简介
 
-`Summer Web App` 是一个以鼠标精度训练为核心的 Web 应用。  
-这个项目最初是一个偏静态页面的训练 Demo，现在已经重构成了完整的前后端一体化应用：
+`Summer Web App` 最初是一个偏静态的鼠标训练 Demo，后来被重构成了完整的前后端一体化项目。  
+现在它已经具备一个真正 Web 应用该有的核心能力：
 
-- 有真正的服务端，而不只是静态页面
-- 有账号系统，而不只是本地试玩
-- 有云端存档，而不只是浏览器 `localStorage`
-- 有完整的页面壳层、设置面板、统计面板和成就系统
-- 训练玩法仍基于 `Canvas`，保留了较轻量、响应快的体验
+- 有服务端，不再只是单页静态试玩
+- 有账号系统，可以注册、登录和保存训练记录
+- 有本地与云端双数据流，兼顾试玩和长期使用
+- 有训练页、统计页、成就页、设置页等完整模块
+- 有可继续扩展的模式系统，方便新增玩法和实验模块
 
-如果你想找一个适合继续扩展的原生 JavaScript Web 游戏项目，或者想拿它作为自己的练手项目、毕业设计、简历项目基础，这个仓库是一个不错的起点。
+如果你想找一个适合继续打磨的原生 JavaScript Web 项目，或者想把它作为作品集 / 毕设 / 练手项目的基础，这个仓库比较合适。
 
-## 核心能力
+## 当前功能
 
-- 账号系统
-  - 用户注册
-  - 用户登录
-  - 获取当前登录用户
-  - 修改昵称
-  - 修改密码
-- 训练模式
-  - 点击模式 `flicking`
-  - 追踪模式 `tracking`
-  - 切换模式 `switching`
-  - 闪现模式 `reflex`
-  - 六目标模式 `sixtarget`
-- 数据能力
-  - 访客模式本地游玩
-  - 登录后云端存档
-  - 本地数据导出 / 导入
-  - 本地数据重置
-  - 训练记录自动统计
-  - 成就自动解锁
-- 个性化能力
-  - HUD 开关
-  - 鼠标轨迹
-  - 粒子效果
-  - 音效开关
-  - 自定义光标样式
-  - 灵敏度换算
-- 工程能力
-  - `Express` 提供页面和 API
-  - JWT 登录态
-  - 本地 JSON 持久化
-  - 项目结构清晰，方便继续拆分重构
+### 账号与数据
 
-## 在线体验
+- 用户注册 / 登录
+- 获取当前用户信息
+- 修改昵称
+- 修改密码
+- 本地试玩模式
+- 登录后云端存档
+- 导出 / 导入训练数据
+- 重置本地数据
 
-如果你已经部署了项目，可以把地址补在这里：
+### 训练模式
 
-```text
-Demo: https://your-demo-url.example.com
-```
+- 点击模式 `flicking`
+- 追踪模式 `tracking`
+- 切换模式 `switching`
+- 闪现模式 `reflex`
+- 六目标模式 `sixtarget`
+- DPI 测试 `dpi`
 
-如果暂时还没部署，也可以先删除这一节，或者保留为待补充。
+### 训练配套能力
 
-## 界面预览
-
-你可以在后续补上截图，例如：
-
-```md
-![home](./docs/home.png)
-![training](./docs/training.png)
-![stats](./docs/stats.png)
-```
-
-建议至少准备 3 张图：
-
-- 首页概览
-- 训练场景
-- 统计 / 成就页面
+- 实时 HUD
+- 命中率 / 反应时间统计
+- 成就系统
+- 自定义光标
+- 灵敏度换算
+- 音效、粒子效果、鼠标轨迹开关
 
 ## 技术栈
 
@@ -97,64 +63,44 @@ Demo: https://your-demo-url.example.com
 - JWT
 - bcryptjs
 
-### 数据存储
+### 存储
 
 - 当前默认：本地 JSON 文件 `data/app-data.json`
-- 兼容思路：未来可迁移到 MySQL / PostgreSQL / MongoDB
+- 未来可迁移：MySQL / PostgreSQL
 
-## 项目结构
+## 运行方式
 
-```text
-pick-pick/
-├─ css/
-│  └─ style.css                 # 页面样式
-├─ data/
-│  └─ .gitkeep                  # 本地数据目录（运行后会生成 app-data.json）
-├─ deploy/                      # 旧部署配置与扩展参考
-├─ js/
-│  ├─ api.js                    # 前端 API 请求封装
-│  ├─ app.js                    # 应用入口
-│  ├─ auth.js                   # 登录态管理
-│  ├─ audio.js                  # 音效管理
-│  ├─ engine.js                 # 游戏引擎核心
-│  ├─ sensitivity.js            # 灵敏度换算
-│  ├─ stats.js                  # 统计面板逻辑
-│  ├─ storage.js                # 本地存储封装
-│  ├─ ui.js                     # UI 交互与页面逻辑
-│  └─ modes/                    # 各训练模式实现
-├─ .env.example                 # 环境变量示例
-├─ .gitignore
-├─ database.sql                 # 后续迁移到关系型数据库时的结构参考
-├─ index.html                   # 前端页面入口
-├─ package.json
-├─ README.md
-└─ server.js                    # Express 服务入口
-```
-
-## 快速开始
-
-### 1. 克隆项目
-
-```bash
-git clone https://github.com/your-name/pick-pick.git
-cd pick-pick
-```
-
-### 2. 安装依赖
+### 方式一：直接启动 Node 服务
 
 ```bash
 npm install
+npm start
 ```
 
-### 3. 配置环境变量
+默认访问地址：
 
-复制环境变量模板：
+```text
+http://localhost:3000
+```
+
+### 方式二：开发模式
 
 ```bash
-copy .env.example .env
+npm run dev
 ```
 
-`.env.example` 内容如下：
+### 方式三：Windows 双击启动
+
+根目录提供了两个启动脚本：
+
+- `start.bat`
+- `start.ps1`
+
+在 Windows 下可以直接双击 `start.bat` 启动项目。
+
+## 环境变量
+
+项目默认读取以下环境变量：
 
 ```env
 PORT=3000
@@ -162,81 +108,95 @@ JWT_SECRET=change-me-before-production
 DATA_FILE=./data/app-data.json
 ```
 
-如果你在 macOS / Linux 下，可以改用：
+可以参考根目录下的 `.env.example` 自行配置。
 
-```bash
-cp .env.example .env
-```
-
-### 4. 启动项目
-
-开发模式：
-
-```bash
-npm run dev
-```
-
-生产模式：
-
-```bash
-npm start
-```
-
-### 5. 访问项目
-
-在浏览器中打开：
+## 项目结构
 
 ```text
-http://localhost:3000
+pick-pick/
+├─ css/
+│  └─ style.css
+├─ data/
+│  └─ .gitkeep
+├─ deploy/
+├─ js/
+│  ├─ api.js
+│  ├─ app.js
+│  ├─ auth.js
+│  ├─ audio.js
+│  ├─ engine.js
+│  ├─ sensitivity.js
+│  ├─ stats.js
+│  ├─ storage.js
+│  ├─ ui.js
+│  └─ modes/
+│     ├─ flicking.js
+│     ├─ tracking.js
+│     ├─ switching.js
+│     ├─ reflex.js
+│     ├─ sixtarget.js
+│     └─ dpi.js
+├─ .env.example
+├─ .gitignore
+├─ database.sql
+├─ index.html
+├─ package.json
+├─ README.md
+├─ server.js
+├─ start.bat
+└─ start.ps1
 ```
 
-## 运行逻辑说明
+## 页面说明
 
-项目现在是“前后端同源”模式：
+### 概览页
 
-- `server.js` 启动 Express 服务
-- Express 负责托管静态资源和 API
-- 前端页面直接请求同域 `/api/*`
-- 数据默认保存在服务端本地 JSON 文件里
+- 展示项目核心入口
+- 展示最近训练记录
+- 展示各模式表现摘要
 
-这意味着它已经是一个真正可部署的 Web 项目，而不是只能双击 `index.html` 的静态 Demo。
+### 训练页
 
-## 数据存储说明
+- 选择训练模式
+- 设置难度、目标大小、训练时长
+- 进入实时训练
 
-当前版本默认使用：
+### 统计页
 
-```text
-data/app-data.json
-```
+- 展示训练总量
+- 展示平均命中率
+- 展示最佳反应时间
+- 展示趋势图表
 
-它会在服务第一次启动时自动创建。
+### 成就页
 
-### 存储内容
+- 展示已解锁与未解锁成就
 
-- 用户账号信息
-- 用户训练统计
-- 用户成就信息
-- 用户设置
-- 用户灵敏度配置
+### 设置页
 
-### 当前方案适合什么场景
+- 调整训练相关设置
+- 调整光标和灵敏度
+- 管理账号资料
+- 导入 / 导出 / 重置本地数据
 
-适合：
+## 数据流说明
 
-- 本地开发
-- Demo 演示
-- 小规模体验站
-- 课程项目 / 作品集项目
+项目支持两套数据流：
 
-不太适合：
+### 未登录时
 
-- 高并发生产环境
-- 多实例横向扩容
-- 对数据一致性要求很高的正式商业场景
+- 训练数据保存到浏览器 `localStorage`
+- 用户可以直接开始试玩
 
-如果你准备上线到更正式的环境，建议把这一层迁移到 MySQL 或 PostgreSQL。
+### 登录后
 
-## API 一览
+- 前端从服务端拉取用户存档
+- 本地数据和云端数据会做接管与同步
+- 后续训练结果优先写入服务端
+
+这套设计适合“先试玩、后注册”的使用路径，也适合长期登录训练。
+
+## API 概览
 
 ### 认证相关
 
@@ -246,7 +206,7 @@ data/app-data.json
 - `PATCH /api/auth/profile`
 - `POST /api/auth/change-password`
 
-### 数据相关
+### 游戏数据相关
 
 - `GET /api/game-data`
 - `PUT /api/game-data`
@@ -255,130 +215,75 @@ data/app-data.json
 
 - `GET /api/health`
 
-## 页面说明
+## 部署说明
 
-### 1. 概览页
+项目本质上是一个 `Node.js + Express` Web 应用，不是纯静态站点。
 
-- 展示核心介绍
-- 展示最近训练记录
-- 展示模式表现
-- 展示关键统计指标
+上线时推荐这样部署：
 
-### 2. 训练页
+1. 使用 `npm start`、`pm2` 或宝塔 `Node 项目管理器` 启动 `server.js`
+2. 用 Nginx 或宝塔反向代理到 `127.0.0.1:3000`
+3. 配置 HTTPS
 
-- 选择训练模式
-- 设置难度、目标大小、训练时长
-- 进入训练并实时显示 HUD
+不建议把它当成纯 HTML 网站直接丢到静态站点目录里运行。
 
-### 3. 统计页
+## 当前存储方案说明
 
-- 显示总训练局数、总命中、平均命中率、最佳反应
-- 使用图表展示趋势变化
+当前默认存储为：
 
-### 4. 成就页
+```text
+data/app-data.json
+```
 
-- 展示当前已解锁和未解锁成就
+优点：
 
-### 5. 设置页
+- 轻量
+- 易部署
+- 适合本地开发和小规模演示
 
-- 训练设置
-- 光标设置
-- 灵敏度设置
-- 账号资料设置
-- 导入 / 导出 / 重置数据
+限制：
 
-## 登录与数据同步机制
+- 不适合高并发
+- 不适合多实例共享数据
+- 不适合正式生产级持久化场景
 
-为了兼顾试玩体验和账号保存，项目采用了两套数据流：
-
-### 未登录时
-
-- 数据保存在浏览器 `localStorage`
-- 用户可以直接开始训练
-
-### 登录后
-
-- 前端会读取服务端账号数据
-- 如果本地已有试玩数据，系统会尝试做一次同步接管
-- 后续训练数据会优先写入服务端
-
-这个机制让项目既适合“先试玩再注册”，也适合“长期登录使用”。
-
-## 部署建议
-
-### 适合的部署方式
-
-- 一台普通 Node.js 服务器
-- 云服务器 / 轻量应用服务器
-- Docker 容器
-- 后续接数据库后再上更正式的 PaaS
-
-### 上线前建议至少处理的事项
-
-- 修改 `JWT_SECRET`
-- 不要把真实 `.env` 提交到 GitHub
-- 为服务加反向代理（如 Nginx）
-- 配置 HTTPS
-- 如果有正式用户数据，尽快迁移到数据库
-
-## GitHub 展示建议
-
-如果你准备把它作为 GitHub 项目首页展示，我建议你再补 3 样东西：
-
-### 1. 补截图
-
-把项目运行后的页面截图放到 `docs/` 目录，然后在 README 顶部展示。
-
-### 2. 补 Demo 地址
-
-如果你部署了线上版本，把地址放在“在线体验”部分。
-
-### 3. 补项目背景
-
-你可以在 README 里额外加一小段：
-
-- 为什么做这个项目
-- 你在里面负责什么
-- 项目最难的点是什么
-
-这对 GitHub 展示和面试都很有帮助。
+如果准备长期上线，建议尽快迁移到 MySQL 或 PostgreSQL。
 
 ## 后续可扩展方向
 
-- 接入 MySQL / PostgreSQL
-- 增加排行榜系统
-- 增加邮箱注册 / 找回密码
-- 增加管理员后台
-- 增加更多训练模式
-- 增加多语言支持
+- 引入排行榜系统
 - 增加用户头像上传
 - 增加对战 / PK 模式
-- 增加移动端适配优化
-- 将前端拆分为组件化框架版本（React / Vue）
+- 增加多语言支持
+- 增加更细的训练分析面板
+- 引入数据库替代本地 JSON 存储
+- 将前端拆分为组件化框架版本（如 React / Vue）
 
 ## 已知说明
 
-- 当前存储层使用 JSON 文件，适合轻量部署
-- `deploy/` 目录中有一些历史部署配置，可作为参考，但不一定完全与当前版本同步
-- `database.sql` 是迁移参考，不是当前默认运行依赖
+- `database.sql` 目前是迁移参考，不是当前默认运行依赖
+- `deploy/` 目录里有历史部署配置，可参考但不一定和当前版本完全同步
+- `mysql2` 目前还保留在依赖里，但当前默认运行并不依赖 MySQL
+
+## 参考与致谢
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Chart.js](https://www.chartjs.org/)
+- 训练模式参考项目：[trainGun](https://github.com/lby-1/trainGun)
+- DPI 测试思路参考：`Speed-Accuracy-Test-master`
 
 ## 贡献
 
 欢迎提 Issue 或 Pull Request。
 
-如果你准备继续开发，比较推荐从下面几个方向入手：
+如果你准备继续开发，比较建议优先处理下面几件事：
 
-- 把存储层抽象成独立模块
-- 为 API 增加参数校验
-- 加入单元测试 / 接口测试
-- 为训练模式补更多统计维度
-
-## 致谢
-
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
-- [Chart.js](https://www.chartjs.org/)
+- 把存储层进一步抽象
+- 为 API 增加更严格的参数校验
+- 增加自动化测试
+- 拆分和整理模式系统
 
 ---
-项目训练模式参考于：https://github.com/lby-1/trainGun
+
 如果这个项目对你有帮助，欢迎点一个 `Star`。

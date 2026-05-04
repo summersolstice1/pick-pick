@@ -7,31 +7,37 @@ class ReflexMode {
         this.config = {
             easy: {
                 radius: 40,
-                lifespan: 1.5,       // 目标存活时间（秒）
-                interval: 1.2,       // 目标间隔（秒）
+                lifespan: 2.2,
+                interval: 1.35,
                 duration: 45
             },
-            medium: {
-                radius: 28,
-                lifespan: 0.8,
-                interval: 0.8,
+            normal: {
+                radius: 32,
+                lifespan: 1.35,
+                interval: 1,
                 duration: 45
             },
             hard: {
+                radius: 22,
+                lifespan: 0.8,
+                interval: 0.7,
+                duration: 45
+            },
+            insane: {
                 radius: 16,
-                lifespan: 0.4,
-                interval: 0.5,
+                lifespan: 0.5,
+                interval: 0.45,
                 duration: 45
             }
         };
-        this.currentConfig = this.config.medium;
+        this.currentConfig = this.config.normal;
     }
     
     init() {
         this.lastTargetSpawn = Date.now();
         this.spawnTimer = 0;
         this.expiredCount = 0;
-        this.currentConfig = this.config[this.engine.difficulty] || this.config.medium;
+        this.currentConfig = this.config[this.engine.difficulty] || this.config.normal;
         
         // 清空目标
         this.engine.targets = [];

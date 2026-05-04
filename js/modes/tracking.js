@@ -87,7 +87,7 @@ class TrackingMode {
             baseX: centerX,
             baseY: centerY,
             radius: radius,
-            speed: speed * 0.1, // 调整速度
+            speed: speed * 0.075,
             time: Math.random() * 100,
             isTracked: false,
             trackedTime: 0,
@@ -95,16 +95,16 @@ class TrackingMode {
             // 运动参数
             freqX: 0.5 + Math.random() * 1.5,
             freqY: 0.3 + Math.random() * 1.2,
-            ampX: canvas.width * 0.15 + Math.random() * canvas.width * 0.15,
-            ampY: canvas.height * 0.15 + Math.random() * canvas.height * 0.15,
+            ampX: canvas.width * 0.11 + Math.random() * canvas.width * 0.1,
+            ampY: canvas.height * 0.11 + Math.random() * canvas.height * 0.1,
             phaseX: Math.random() * Math.PI * 2,
             phaseY: Math.random() * Math.PI * 2,
             
             // 二级噪声
             noiseFreqX: 2 + Math.random() * 3,
             noiseFreqY: 2.5 + Math.random() * 3,
-            noiseAmpX: 20 + Math.random() * 30,
-            noiseAmpY: 20 + Math.random() * 30
+            noiseAmpX: 12 + Math.random() * 18,
+            noiseAmpY: 12 + Math.random() * 18
         };
         
         this.engine.targets.push(target);

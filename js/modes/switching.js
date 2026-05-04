@@ -7,25 +7,31 @@ class SwitchingMode {
         this.lastHitTime = 0;
         this.config = {
             easy: {
-                radius: 35,
+                radius: 40,
                 count: 2,
                 moving: false,
                 duration: 60
             },
-            medium: {
-                radius: 25,
+            normal: {
+                radius: 30,
                 count: 3,
                 moving: false,
                 duration: 60
             },
             hard: {
+                radius: 22,
+                count: 4,
+                moving: true,
+                duration: 60
+            },
+            insane: {
                 radius: 18,
                 count: 5,
                 moving: true,
                 duration: 60
             }
         };
-        this.currentConfig = this.config.medium;
+        this.currentConfig = this.config.normal;
     }
     
     init() {
@@ -33,7 +39,7 @@ class SwitchingMode {
         this.targets = [];
         this.batchCleared = 0;
         this.lastHitTime = performance.now();
-        this.currentConfig = this.config[this.engine.difficulty] || this.config.medium;
+        this.currentConfig = this.config[this.engine.difficulty] || this.config.normal;
         
         // 生成第一批目标
         this.spawnBatch();
@@ -64,8 +70,8 @@ class SwitchingMode {
                 y: y,
                 radius: this.currentConfig.radius,
                 moving: this.currentConfig.moving,
-                vx: this.currentConfig.moving ? (Math.random() - 0.5) * 60 : 0,
-                vy: this.currentConfig.moving ? (Math.random() - 0.5) * 60 : 0,
+                vx: this.currentConfig.moving ? (Math.random() - 0.5) * 42 : 0,
+                vy: this.currentConfig.moving ? (Math.random() - 0.5) * 42 : 0,
                 color: '#ff6b35',
                 active: true
             };

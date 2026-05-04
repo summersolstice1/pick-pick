@@ -25,14 +25,14 @@ class SixTargetMode {
     
     spawnTargets() {
         const canvas = this.engine.canvas;
-        const radius = this.engine.getTargetSize();
+        const radius = Math.round(this.engine.getTargetSize() * 1.15);
         
         // 六边形布局
         for (let i = 0; i < 6; i++) {
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
             const angle = (Math.PI * 2 / 6) * i;
-            const distance = Math.min(canvas.width, canvas.height) * 0.3;
+            const distance = Math.min(canvas.width, canvas.height) * 0.25;
             
             const x = centerX + Math.cos(angle) * distance;
             const y = centerY + Math.sin(angle) * distance;

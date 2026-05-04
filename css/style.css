@@ -434,7 +434,7 @@ button {
 .mode-showcase {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .mode-card {
@@ -662,6 +662,24 @@ button {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+}
+
+.result-insight {
+    background: linear-gradient(135deg, rgba(47, 128, 237, 0.08), rgba(255, 77, 109, 0.08));
+    border: 1px solid rgba(47, 128, 237, 0.12);
+    border-radius: 20px;
+    margin-bottom: 24px;
+    padding: 18px 20px;
+}
+
+.result-insight h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.result-insight p {
+    color: var(--muted);
+    line-height: 1.8;
 }
 
 .chart-panel canvas {
